@@ -4,13 +4,11 @@ const router = Router();
 //Creating tweet
 router.post('/', (req, res) => {
     res.status(501).json({error: 'User not implemented'})
-
 })
 
 //List tweet
 router.get('/', (req, res) => {
     console.log('User not implemented')
-
 })
 
 //get one tweets
