@@ -15,17 +15,21 @@ router.post("/", async (req, res) => {
   } catch (err) {
     res.status(400).json({ err: "Username an email address should be unique" });
   }
-  
 });
 
 router.get("/", async (req, res) => {
-  const allUser = await prisma.user.findMany();
+  const allUser = await prisma.user.findMany({
+    select: { id: true, name: true, image: true, bio: true },
+  });
   res.send(allUser);
 });
 
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
-  const user = await prisma.user.findUnique({ where: { id: Number(id) } });
+  const user = await prisma.user.findUnique({
+    where: { id: Number(id) },
+    include: { tweets: true },
+  });
   res.json(user);
 });
 
@@ -46,8 +50,8 @@ router.put("/:id", async (req, res) => {
 });
 
 router.delete("/:id", async (req, res) => {
- const {id} = req.params;
-  await prisma.user.delete({where:  {id: Number(id)} })
+  const { id } = req.params;
+  await prisma.user.delete({ where: { id: Number(id) } });
   res.status(200);
 });
 
