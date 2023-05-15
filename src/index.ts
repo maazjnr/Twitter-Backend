@@ -4,11 +4,12 @@ app.use(express.json());
 import userRoutes from './routes/userRoutes';
 import tweetRoutes from './routes/tweetRoutes';
 import authRoutes from './routes/authRoutes';
+import { authenticateToken } from './middlewares/authMiddleware';
 
-const PORT = 7000;
+const PORT = 3000;
 
-app.use('/user', userRoutes);
-app.use('/tweet', tweetRoutes);
+app.use('/user', authenticateToken,  userRoutes);
+app.use('/tweet', authenticateToken, tweetRoutes);
 app.use('/auth', authRoutes);
 
 
